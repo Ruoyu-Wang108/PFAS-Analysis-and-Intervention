@@ -1,40 +1,37 @@
 shinyUI(
-  # ----------Fluid page-----------------  
-  fluidPage(
+  # ----------Dashborad page-----------------  
+  dashboardPage(
     
     # ---------Overall Title---------------
-    titlePanel("PFAS Around Us"),
+    dashboardHeader(title = "Basic dashboard"),
     # ---------END title-------------- ---- 
     
-    # --------Navigate bar-----------------
-    navbarPage(
+    dashboardSidebar(
+      selectInput("county", label = h4("Please select your county"), 
+                  choices = c(unique(county_geo$county)), 
+                  selected = 1),
       
-      theme = shinytheme("journal"),
-      "PFAS Level in California",
+      actionButton(inputId = "search", label = "Search")
       
-      # -----Tab 1---------------------
-      tabPanel(
-        "Possible Intervention",
-        
-      
-        numericInput("num", label = h3("zip code"), value = 1),
-        
-        hr(),
-        fluidRow(column(3, verbatimTextOutput("value")))  
+    ),
     
-      ),
-      # ------END Tab 1----------------
-      
-      
+    dashboardBody(
+      fluidRow(
+        
+        column(6, 
+               # interactive park map
+               leafletOutput("map", width = "100%", height = 500)
+        )
+        
+      )
+    
     )
-    
-    # ---------END Navbar-------------------
-    
+
     
     
     
   )
-  # -------END Fluid page-----------------
+  # -------END Dashborad page-----------------
   
 )
 # =========END APP======================
